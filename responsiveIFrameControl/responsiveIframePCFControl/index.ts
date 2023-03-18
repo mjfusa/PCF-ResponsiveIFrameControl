@@ -1,5 +1,5 @@
+import { connect } from "http2";
 import {IInputs, IOutputs} from "./generated/ManifestTypes";
-
 export class responsiveIframePCFControl implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
     // Reference to IFrame HTMLElement
@@ -13,6 +13,9 @@ export class responsiveIframePCFControl implements ComponentFramework.StandardCo
 
 	// Flag if control view has been rendered
 	private _controlViewRendered: boolean;
+
+    // Flag if page is reachable if not assume not connected to VPN
+	private _isReachable: boolean;
 
     /**
      * Empty constructor.
@@ -37,7 +40,7 @@ export class responsiveIframePCFControl implements ComponentFramework.StandardCo
 		this._controlViewRendered = false;
     }
 
-
+     
     /**
      * Called when any value in the property bag has changed. This includes field values, data-sets, global values such as container height and width, offline status, control metadata values such as label, visible, etc.
      * @param context The entire property bag available to control via Context Object; It contains values as set up by the customizer mapped to names defined in the manifest, as well as utility functions
@@ -49,20 +52,41 @@ export class responsiveIframePCFControl implements ComponentFramework.StandardCo
 			this.renderIFrame();
 			this._controlViewRendered = true;
 		}
-
-		const iframeSrc = context.parameters.source.raw;
-
-		if(this._Source != iframeSrc) {
-			this._Source = iframeSrc ? iframeSrc : "";
-			this._iframe.setAttribute("src", this._Source);
-		}
+        const iframeSrc = context.parameters.source.raw;
+        if (iframeSrc!=null){
+        var myRequest = new Request(iframeSrc);
+        fetch(myRequest, {
+            mode: "no-cors",
+            signal: AbortSignal.timeout(5000)
+        }).then((response) => {
+            var collection = this._container.getElementsByClassName('iFrameControl');
+            if (collection!=null) {
+               this._container.removeChild(collection[0]);
+               this._Source = "";
+            }
+           this.renderIFrame();
+          if(this._Source != iframeSrc) {
+                this._Source = iframeSrc ? iframeSrc : "";
+                this._iframe.setAttribute("src", this._Source);
+                
+            }   
+          }).catch((error) => {
+             var collection = this._container.getElementsByClassName('iFrameControl');
+             if (collection!=null) {
+                this._container.removeChild(collection[0]);
+             }
+            this.renderIFrame();
+            this._iframe.contentWindow?.document.write ("<H1>You are not connected to the VPN. Please connect and retry to access this tab.</H1>");        
+          });
+        }
     }
 
     /** 
 	 * Render iframe HTML Element and appends it to the control container 
 	 */
-	 private renderIFrame(): void {
+    private renderIFrame(): void {
 		const iFrameElement: HTMLIFrameElement = document.createElement("iframe");
+		iFrameElement.setAttribute("id", "iFrameCtrl");
 		iFrameElement.setAttribute("class", "iFrameControl");
 		iFrameElement.setAttribute("frameborder", "0");
 
