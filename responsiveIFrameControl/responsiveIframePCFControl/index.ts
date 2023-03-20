@@ -8,6 +8,9 @@ export class responsiveIframePCFControl implements ComponentFramework.StandardCo
 	// SRC for iframe
 	private _Source: string;
 
+    // HTML for Error message
+    private _HtmlError: string;
+
 	// Reference to the control container HTMLDivElement
 	private _container: HTMLDivElement;
 
@@ -53,6 +56,7 @@ export class responsiveIframePCFControl implements ComponentFramework.StandardCo
 			this._controlViewRendered = true;
 		}
         const iframeSrc = context.parameters.source.raw;
+        const htmlstr = context.parameters.html.raw;
         if (iframeSrc!=null){
         var myRequest = new Request(iframeSrc);
         fetch(myRequest, {
@@ -68,7 +72,6 @@ export class responsiveIframePCFControl implements ComponentFramework.StandardCo
           if(this._Source != iframeSrc) {
                 this._Source = iframeSrc ? iframeSrc : "";
                 this._iframe.setAttribute("src", this._Source);
-                
             }   
           }).catch((error) => {
              var collection = this._container.getElementsByClassName('iFrameControl');
@@ -76,7 +79,9 @@ export class responsiveIframePCFControl implements ComponentFramework.StandardCo
                 this._container.removeChild(collection[0]);
              }
             this.renderIFrame();
-            this._iframe.contentWindow?.document.write ("<H1>You are not connected to the VPN. Please connect and retry to access this tab.</H1>");        
+            if (htmlstr != null) {
+                this._iframe.contentWindow?.document.write (htmlstr);
+            }        
           });
         }
     }
