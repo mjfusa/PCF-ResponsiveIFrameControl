@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest>
-  <control namespace="appcon" constructor="responsiveIframePCFControl" version="0.0.1" display-name-key="responsiveIframePCFControl" description-key="responsiveIframePCFControl description" control-type="standard" >
+  <control namespace="appcon" constructor="responsiveIframePCFControl" version="1.1.7" display-name-key="responsiveIframePCFControl" description-key="responsiveIframePCFControl description" control-type="standard">
     <!--external-service-usage node declares whether this 3rd party PCF control is using external service or not, if yes, this control will be considered as premium and please also add the external domain it is using.
     If it is not using any external service, please set the enabled="false" and DO NOT add any domain below. The "enabled" will be false by default.
     Example1:
@@ -18,9 +18,8 @@
       -->
     </external-service-usage>
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
-    <property name="source" display-name-key="Source" description-key="Source" of-type="SingleLine.URL" usage="bound" required="true" default-value="https://www.bing.com/"/>
-    <property name="html" display-name-key="ErrorInHtml" description-key="Error In Html markup" of-type="SingleLine.Text" usage="bound" required="true" 
-      default-value="&lt;div style=&quot;background-color: #ffcccc; border: 1px solid #ff0000; padding: 10px; border-radius: 5px; font-family: Arial, Helvetica, sans-serif;&quot;&gt;     &lt;p style=&quot;color: #ff0000; font-weight: bold; margin: 0;&quot;&gt;Error: Not Connected&lt;/p&gt;     &lt;p style=&quot;color: #000; margin: 5px 0;&quot;&gt;Sorry, it looks like you are not currently connected to the internet or VPN. Please check your network / VPN connection and try again.&lt;/p&gt; &lt;/div&gt;"/>
+    <property name="source" display-name-key="Source" description-key="Source" of-type="SingleLine.URL" usage="bound" required="true" default-value="https://headtrax" />
+    <property name="html" display-name-key="ErrorInHtml" description-key="Error In Html markup" of-type="SingleLine.Text" usage="bound" required="true" default-value="&lt;div style='background-color: #ffcccc; border: 1px solid #ff0000; padding: 10px; border-radius: 5px; font-family: Arial, Helvetica, sans-serif;'&gt;     &lt;p style='color: #ff0000; font-weight: bold; margin: 0;'&gt;Error: Not Connected&lt;/p&gt;     &lt;p style='color: #000; margin: 5px 0;'&gt;Sorry, it looks like you are not currently connected to the internet or VPN. Please check your network / VPN connection and try again.&lt;/p&gt; &lt;/div&gt;" />
     <!--
       Property node's of-type attribute can be of-type-group attribute.
       Example:
@@ -33,7 +32,7 @@
       <property name="sampleProperty" display-name-key="Property_Display_Key" description-key="Property_Desc_Key" of-type-group="numbers" usage="bound" required="true" />
     -->
     <resources>
-      <code path="index.ts" order="1"/>
+      <code path="index.ts" order="1" />
       <css path="css/responsiveIframePCFControl.css" order="1" />
       <!-- UNCOMMENT TO ADD MORE RESOURCES
       <resx path="strings/responsiveIframePCFControl.1033.resx" version="1.0.0" />
