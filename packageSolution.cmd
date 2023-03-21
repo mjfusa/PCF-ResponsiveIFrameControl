@@ -13,7 +13,6 @@ msbuild /t:build /restore
 if "%1"=="push" goto push
 goto end
 :push
-REM Note: Increment version in manifest prior to push to update existing deployment
 cd ..\%controlName%
 cmd /c pac pcf version --strategy manifest
 cmd /c pac pcf push --publisher-prefix %publisherPrefix%
