@@ -1,6 +1,6 @@
 REM Update publisherName and publisherPrefix below for your environment
-set publisherName=<yourpubname>
-set publisherPrefix=<yourpubprefix>
+set publisherName=wmappconsult
+set publisherPrefix=appcon
 set solutionName=ResponsiveIFrameControlSolution
 set controlName=responsiveIFrameControl
 
