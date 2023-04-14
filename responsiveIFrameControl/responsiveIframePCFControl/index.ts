@@ -1,5 +1,7 @@
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 
+import { IInputs, IOutputs } from "./generated/ManifestTypes";
+
 export class responsiveIframePCFControl implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 
     // Reference to IFrame HTMLElement
@@ -8,13 +10,25 @@ export class responsiveIframePCFControl implements ComponentFramework.StandardCo
 
     private _height: number;
     private _width: number;
+    private _iframe: HTMLIFrameElement;
+    private _iErrorframe: HTMLIFrameElement;
 
+    private _height: number;
+    private _width: number;
+
+    // SRC for iframe
+    private _Source: string;
     // SRC for iframe
     private _Source: string;
 
     // Reference to the control container HTMLDivElement
     private _container: HTMLDivElement;
+    // Reference to the control container HTMLDivElement
+    private _container: HTMLDivElement;
 
+    // Flag if control view has been rendered
+    private _controlViewRendered: boolean;
+    private _bErrorRendered = false;
     // Flag if control view has been rendered
     private _controlViewRendered: boolean;
     private _bErrorRendered = false;
@@ -22,6 +36,7 @@ export class responsiveIframePCFControl implements ComponentFramework.StandardCo
     /**
      * Empty constructor.
      */
+    constructor() {
     constructor() {
 
     }
@@ -35,11 +50,15 @@ export class responsiveIframePCFControl implements ComponentFramework.StandardCo
      * @param container If a control is marked control-type='standard', it will receive an empty div element within which it can render its content.
      */
     public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container: HTMLDivElement): void {
+    public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container: HTMLDivElement): void {
         // Add control initialization code
         this._container = container;
         this._controlViewRendered = false;
         context.mode.trackContainerResize(true);
+        this._controlViewRendered = false;
+        context.mode.trackContainerResize(true);
     }
+
 
 
     /**
@@ -87,9 +106,25 @@ export class responsiveIframePCFControl implements ComponentFramework.StandardCo
         const iFrameElement: HTMLIFrameElement = document.createElement("iframe");
         iFrameElement.setAttribute("class", "iFrameControl");
         iFrameElement.setAttribute("frameborder", "0");
+        const iFrameElement: HTMLIFrameElement = document.createElement("iframe");
+        iFrameElement.setAttribute("class", "iFrameControl");
+        iFrameElement.setAttribute("frameborder", "0");
 
         this._iframe = iFrameElement;
+        this._iframe = iFrameElement;
 
+        this._container.appendChild(this._iframe);
+    }
+
+    private renderErrorIFrame(): void {
+        const iFrameElement: HTMLIFrameElement = document.createElement("iframe");
+        iFrameElement.setAttribute("class", "iFrameControl");
+        iFrameElement.setAttribute("frameborder", "0");
+        iFrameElement.setAttribute("style", `display: none;`);
+
+        this._iErrorframe = iFrameElement;
+        this._container.appendChild(this._iErrorframe);
+    }
         this._container.appendChild(this._iframe);
     }
 
@@ -107,6 +142,7 @@ export class responsiveIframePCFControl implements ComponentFramework.StandardCo
      * It is called by the framework prior to a control receiving new data.
      * @returns an object based on nomenclature defined in manifest, expecting object[s] for property marked as “bound” or “output”
      */
+    public getOutputs(): IOutputs {
     public getOutputs(): IOutputs {
         return {};
     }

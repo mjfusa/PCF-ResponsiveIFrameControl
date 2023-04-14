@@ -18,7 +18,7 @@
       -->
     </external-service-usage>
     <!-- property node identifies a specific, configurable piece of data that the control expects from CDS -->
-    <property name="source" display-name-key="Source" description-key="Source" of-type="SingleLine.URL" usage="bound" required="true" default-value="https://bing.com" />
+    <property name="source" display-name-key="Source" description-key="Source" of-type="SingleLine.URL" usage="bound" required="true" default-value="https://www.bing.com/" />
     <property name="html" display-name-key="ErrorInHtml" description-key="Error In Html markup" of-type="SingleLine.Text" usage="bound" required="true" default-value="&lt;div style='background-color: #ffcccc; border: 1px solid #ff0000; padding: 10px; border-radius: 5px; font-family: Arial, Helvetica, sans-serif;'&gt;     &lt;p style='color: #ff0000; font-weight: bold; margin: 0;'&gt;Error: Not Connected&lt;/p&gt;     &lt;p style='color: #000; margin: 5px 0;'&gt;Sorry, it looks like you are not currently connected to the internet or VPN. Please check your network / VPN connection and try again.&lt;/p&gt; &lt;/div&gt;" />
     <property name="displayerror" display-name-key="DisplayError" description-key="Display Error" of-type="SingleLine.Text" usage="bound" required="true" default-value="false" />
     <!--
